@@ -5,7 +5,7 @@
       <my-button class="add-post" @click="showDialog">Создать пост</my-button>
     </div>
     <my-select class="select" v-model="selectedSort" :options="sortOptions"/>
-    <post-list v-if="!isPostsLoading" :posts="posts" @remove="removePost"/>
+    <post-list v-if="!isPostsLoading" :posts="sortedPosts" @remove="removePost"/>
     <div v-if="isPostsLoading">
       <p class="loading">Идёт загрузка
         <span class="loading__dot-1">.</span>
@@ -68,12 +68,13 @@ export default {
   mounted() {
     this.fetchPosts();
   },
-  watch: {
-    selectedSort(newValue) {
-      this.posts.sort((post1, post2) => {
-        return post1[newValue]?.localeCompare(post2[newValue]);
-      })
+  computed: {
+    sortedPosts() {
+      return [...this.posts].sort((post1, post2) => post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]));
     }
+  },
+  watch: {
+
   }
 
 }
