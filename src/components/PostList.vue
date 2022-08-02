@@ -28,7 +28,8 @@ h3 {
 }
 
 h2 {
-  margin: 30px 0 0 0;
+  margin: 50px 0 0 0;
   color: #c81414;
+  text-align: center;
 }
 </style>
