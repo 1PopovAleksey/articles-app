@@ -1,5 +1,5 @@
 <template>
-  <button class="del-btn">
+  <button>
     <slot></slot>
   </button>
 </template>
@@ -13,9 +13,16 @@ export default {
 <style scoped>
 button {
   padding: 10px 10px;
-  border: none;
+  border: 2px solid #000;
   background: #121212;
   color: #FFF;
   font-family: Monospace, system-ui;
+  cursor: pointer;
+  transition: all .3s ease;
+}
+
+button:hover {
+  background: #FFF;
+  color: #000;
 }
 </style>
