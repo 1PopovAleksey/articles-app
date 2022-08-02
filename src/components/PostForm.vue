@@ -4,7 +4,7 @@
     <form @submit.prevent>
       <my-input v-model="post.title" class="input" type="text"
              placeholder="Название"/>
-      <my-input v-model="post.descr" class="input" type="text"
+      <my-input v-model="post.body" class="input" type="text"
              placeholder="Описание"/>
       <my-button type="submit" @click="createPost">Создать</my-button>
     </form>
@@ -17,7 +17,7 @@ export default {
     return {
       post: {
         title: '',
-        descr: '',
+        body: '',
       }
     }
   },
@@ -27,7 +27,7 @@ export default {
       this.$emit('create', this.post)
       this.post = {
         title: '',
-        descr: '',
+        body: '',
       }
     },
   }

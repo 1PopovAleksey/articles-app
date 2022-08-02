@@ -2,10 +2,10 @@
   <div class="post">
     <div>
       <div><p><strong>Название:</strong> {{ post.title }}</p></div>
-      <div><p><strong>Описание:</strong> {{ post.descr }}</p></div>
+      <div><p><strong>Описание:</strong> {{ post.body }}</p></div>
     </div>
     <div class="post__btn">
-      <my-button @click="$emit('remove', post)">X</my-button>
+      <my-button class="del-btn" @click="$emit('remove', post)">X</my-button>
     </div>
   </div>
 </template>
@@ -37,6 +37,5 @@ export default {
   padding: 0 0 0 1px;
   width: 20px;
   height: 20px;
-  cursor: pointer;
 }
 </style>
