@@ -38,4 +38,8 @@ export default {
   width: 20px;
   height: 20px;
 }
+
+.del-btn:hover {
+  color: #c81414 !important;
+}
 </style>
