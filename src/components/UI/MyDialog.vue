@@ -44,7 +44,7 @@ export default {
   padding: 20px;
   background: #FFF;
   min-height: max-content;
-  min-width: 320px;
+  max-width: 360px;
 }
 
 .del-btn__block {
