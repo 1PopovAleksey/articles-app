@@ -14,7 +14,7 @@ export default {
 button {
   padding: 10px 10px;
   border: 2px solid #000;
-  background: #121212;
+  background: #000;
   color: #FFF;
   font-family: Monospace, system-ui;
   cursor: pointer;
