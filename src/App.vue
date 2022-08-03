@@ -1,11 +1,17 @@
 <template>
   <div class="container">
-    <div class="add-block">
-      <h1>Страница с постами</h1>
-      <my-button class="add-post" @click="showDialog">Создать пост</my-button>
-    </div>
+    <h1>Страница с постами</h1>
+    <my-button class="add-post" @click="showDialog">Создать пост</my-button>
     <my-select class="select" v-model="selectedSort" :options="sortOptions"/>
-    <post-list v-if="!isPostsLoading" :posts="sortedPosts" @remove="removePost"/>
+    <my-input
+        v-model="searchQuery"
+        placeholder="Поиск..."
+    />
+    <div class="choose-wrapper">
+      <span class="choose-page" v-for="pageNumber in totalPages" :key="pageNumber"
+            :class="{'current-page': page === pageNumber}" @click="changePage(pageNumber)">{{ pageNumber }}</span>
+    </div>
+    <post-list v-if="!isPostsLoading" :posts="sortedAndSearchedPosts" @remove="removePost"/>
     <div v-if="isPostsLoading">
       <p class="loading">Идёт загрузка
         <span class="loading__dot-1">.</span>
@@ -25,17 +31,22 @@
 import PostList from "@/components/PostList";
 import PostForm from "@/components/PostForm";
 import MyButton from "@/components/UI/MyButton";
-import axios from "axios";
 import MySelect from "@/components/UI/MySelect";
+import axios from "axios";
+import MyInput from "@/components/UI/MyInput";
 
 export default {
-  components: {MySelect, MyButton, PostList, PostForm},
+  components: {MyInput, MySelect, MyButton, PostList, PostForm},
   data() {
     return {
       posts: [],
       dialogVisible: false,
       isPostsLoading: false,
       selectedSort: '',
+      searchQuery: '',
+      page: 1,
+      limit: 10,
+      totalPages: 0,
       sortOptions: [
         {value: 'title', name: 'По названию'},
         {value: 'body', name: 'По описанию'},
@@ -53,10 +64,19 @@ export default {
     showDialog() {
       this.dialogVisible = true;
     },
+    changePage(pageNumber) {
+      this.page = pageNumber;
+    },
     async fetchPosts() {
       try {
         this.isPostsLoading = true;
-        const resPosts = await axios.get(`https://jsonplaceholder.typicode.com/posts?_limit=10`);
+        const resPosts = await axios.get(`https://jsonplaceholder.typicode.com/posts`, {
+          params: {
+            _page: this.page,
+            _limit: this.limit,
+          }
+        });
+        this.totalPages = Math.ceil(resPosts.headers['x-total-count'] / this.limit)
         this.posts = resPosts.data;
       } catch (err) {
         alert('error')
@@ -71,11 +91,12 @@ export default {
   computed: {
     sortedPosts() {
       return [...this.posts].sort((post1, post2) => post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]));
+    },
+    sortedAndSearchedPosts() {
+      return this.sortedPosts.filter(post => post.title.toLowerCase().includes(this.searchQuery.toLowerCase()))
     }
   },
-  watch: {
-
-  }
+  watch: {}
 
 }
 </script>
@@ -101,14 +122,6 @@ body {
   width: 800px;
 }
 
-.add-block {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-}
-
 .add-post {
   margin: 10px 0 0 0;
   width: 320px;
@@ -131,12 +144,36 @@ body {
 .select:active {
   border-radius: 0;
   border: 2px solid #000;
+  background: black;
+  color: #FFF;
 }
 
 .select:hover {
-  padding: 0;
+  padding: 5px 10px 5px 5px;
   background: black;
   color: #FFF;
+}
+
+.choose-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0 0 0;
+  width: 320px;
+}
+
+.choose-page {
+  padding: 5px;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+.choose-page:hover {
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
+}
+
+.current-page {
+  box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.2);
 }
 
 form {
