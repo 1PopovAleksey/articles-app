@@ -6,7 +6,7 @@
              placeholder="Название"/>
       <my-input v-model="post.body" class="input" type="text"
              placeholder="Описание"/>
-      <my-button type="submit" @click="createPost">Создать</my-button>
+      <my-button class="add-btn" type="submit" @click="createPost">Создать</my-button>
     </form>
   </div>
 </template>
@@ -35,5 +35,8 @@ export default {
 </script>
 
 <style scoped>
-
+.add-btn {
+  margin: 10px 0 0 0;
+  width: 100%;
+}
 </style>
