@@ -40,16 +40,24 @@ h2 {
   text-align: center;
 }
 
-.list-complete-item {
-  transition: all 1s;
+.post-list-item {
+  transition: all .3s;
   display: inline-block;
   margin-right: 10px;
 }
-.list-complete-enter, .list-complete-leave-to {
-  opacity: 0;
-  transform: translateY(30px);
+
+.post-list-enter-active,
+.post-list-leave-active {
+  transition: all .3s ease;
 }
-.list-complete-leave-active {
-  position: absolute;
+
+.post-list-enter-from,
+.post-list-leave-to {
+  opacity: 0;
+  transform: translateX(50px);
+}
+
+.post-list-move {
+  transition: all .5s ease;
 }
 </style>
