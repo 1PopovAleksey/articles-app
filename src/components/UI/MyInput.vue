@@ -18,15 +18,40 @@ export default {
 
 <style scoped>
 .input {
-  width: 100%;
-  padding: 10px 10px;
-  margin: 5px 0 10px 0;
-  border: none;
+  padding: 5px 10px 5px 10px;
+  margin: 10px 0 0 0;
+  height: 35px;
+  width: 320px;
+  border-radius: 0;
+  border: 2px solid #000;
+  color: #000;
   box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
   font-family: Monospace, system-ui;
+  transition: all .2s ease;
 }
 
-input::placeholder {
+.input:focus,
+.input:focus-visible,
+.input:active {
+  border-radius: 0;
+  border: 2px solid #000;
+  background: black;
+  color: #FFF;
+}
+
+.input:hover {
+  padding: 5px 10px 5px 5px;
+  background: black;
+  color: #FFF;
+}
+
+.input::placeholder {
+  color: black;
   font-family: Monospace, system-ui;
+  transition: all .2s ease;
+}
+
+.input:hover::placeholder {
+  color: white;
 }
 </style>
